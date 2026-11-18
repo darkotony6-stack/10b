@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <title>10Б — Расписание</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2314161b'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='700' font-size='26' fill='%2360a5fa'%3E10%D0%91%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('10b_theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" aria-label="Минималистичное меню">
+      <div class="brand">
+        <span class="brand-badge">10Б</span>
+        <div class="clock-status" id="clock-status" title="Проверка сетевого времени МСК...">
+          <span class="sync-dot syncing" id="sync-dot" aria-hidden="true"></span>
+          <span class="msk-time" id="msk-clock">--:--:--</span>
+          <span class="msk-tz">МСК</span>
+        </div>
+      </div>
+
+      <nav class="nav-controls" aria-label="Навигация">
+        <div class="segmented" role="tablist" aria-label="Разделы">
+          <button
+            type="button"
+            class="seg-btn active"
+            id="tab-now"
+            role="tab"
+            aria-selected="true"
+            aria-controls="view-now"
+          >
+            Сейчас
+          </button>
+          <button
+            type="button"
+            class="seg-btn"
+            id="tab-schedule"
+            role="tab"
+            aria-selected="false"
+            aria-controls="view-schedule"
+          >
+            Расписание
+          </button>
+        </div>
+        <button
+          type="button"
+          class="icon-btn"
+          id="theme-toggle"
+          aria-label="Переключить тему"
+          title="Переключить тему"
+        >
+          <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section id="view-now" class="view active" role="tabpanel" aria-labelledby="tab-now">
+        <div id="now-container" class="now-container" aria-live="polite">
+          <div class="loading-state">
+            <span class="status-pill">Синхронизация часов МСК…</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-schedule" class="view" role="tabpanel" aria-labelledby="tab-schedule" hidden>
+        <div class="schedule-header">
+          <div class="day-tabs" id="day-tabs" role="tablist" aria-label="Дни недели"></div>
+          <div class="day-summary" id="day-summary"></div>
+        </div>
+        <div class="schedule-list" id="schedule-list"></div>
+      </section>
+    </main>
+
+    <footer class="bottom-meta">
+      <span id="sync-meta">Точное время по сети (UTC+3)</span>
+    </footer>
+  </div>
+
+  <script defer src="js/holidays.js"></script>
+  <script defer src="js/schedule.js"></script>
+  <script defer src="js/time-sync.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
